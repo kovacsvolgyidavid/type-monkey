@@ -1,0 +1,8 @@
+services:
+  typewriter:
+    build: ./typewriter/.
+    develop:
+      watch:
+        - action: sync
+          path: ./typewriter
+          target: /home/node
