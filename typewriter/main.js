@@ -18,7 +18,6 @@ const activeWorkers = []
 let current, last= randomGenerator.getRandomChar(), lastSecond= randomGenerator.getRandomChar(), lastThird= randomGenerator.getRandomChar()
 
 const textFoundCounter = {};
-let i = 0;
 while(true){
     current = randomGenerator.getRandomChar()
     const textShard = (lastThird+lastSecond + last+ current).toLowerCase();
@@ -27,6 +26,9 @@ while(true){
         const result = worker(current)
         if(result){
             result.forEach(res=>{
+                if(res.foundText.length>7){
+                    console.log(res.foundText)
+                }
                 const key = res.foundText + '#' + res.startingIndex;
                 textFoundCounter[key] = (textFoundCounter[key] || 0) + 1; 
             });
@@ -43,8 +45,4 @@ while(true){
     lastThird = lastSecond;
     lastSecond = last;
     last = current;
-    i++;
-    if(i%1000000 === 0){
-        console.log(textFoundCounter);
-    }
 }

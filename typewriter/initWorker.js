@@ -6,7 +6,7 @@ export const initWorker = (indexArrays, textShard, text) => {
     }));
     return (nextChar) => {
         results = results.map((result) => {
-            if (nextChar === text.charAt(result.textIndex)) {
+            if (nextChar === text.charAt(result.textIndex) && !result.stopped) {
                 return {
                     ...result,
                     textIndex: result.textIndex + 1,
