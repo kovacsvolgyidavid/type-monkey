@@ -1,8 +1,32 @@
 services:
   typewriter:
     build: ./typewriter/.
+    depends_on:
+      db:
+        condition: service_healthy
     develop:
       watch:
         - action: sync
           path: ./typewriter
           target: /home/node
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+volumes:
+  mysql-data:

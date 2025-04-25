@@ -5,6 +5,7 @@ import fs from 'fs'
 import { createTextMap } from './createTextMap.js';
 import { initWorker } from './initWorker.js';
 import { createRandomGenerator } from './createRandomGenerator.js';
+import { saveResults } from './saveResults.js';
 
 let text = fs.readFileSync('./text.txt').toString();
 
@@ -17,7 +18,6 @@ const activeWorkers = []
 
 let current, last= randomGenerator.getRandomChar(), lastSecond= randomGenerator.getRandomChar(), lastThird= randomGenerator.getRandomChar()
 
-const textFoundCounter = {};
 while(true){
     current = randomGenerator.getRandomChar()
     const textShard = (lastThird+lastSecond + last+ current).toLowerCase();
@@ -25,13 +25,7 @@ while(true){
     activeWorkers.forEach((worker, index)=>{
         const result = worker(current)
         if(result){
-            result.forEach(res=>{
-                if(res.foundText.length>7){
-                    console.log(res.foundText)
-                }
-                const key = res.foundText + '#' + res.startingIndex;
-                textFoundCounter[key] = (textFoundCounter[key] || 0) + 1; 
-            });
+            saveResults(result);
             workersToRemove.push(index);
         }
     })
@@ -46,3 +40,4 @@ while(true){
     lastSecond = last;
     last = current;
 }
+
