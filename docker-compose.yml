@@ -1,6 +1,8 @@
 services:
   typewriter:
     build: ./typewriter/.
+    ports:
+      - "9229:9229"
     depends_on:
       db:
         condition: service_healthy

@@ -4,9 +4,8 @@ CREATE DATABASE IF NOT EXISTS monkey;
 -- Use the database
 USE monkey;
 
-CREATE TABLE your_table_name (
+CREATE TABLE results (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  foundText TEXT NOT NULL,
-  date DATE NOT NULL,
-  startingPosition INT NOT NULL
+  text_fragment TEXT NOT NULL,
+  counter INT NOT NULL
 );

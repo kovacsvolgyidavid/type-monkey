@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon main.js"
+    "start": "nodemon --inspect=0.0.0.0:9229 main.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,5 +17,8 @@
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
     "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "mysql2": "^3.14.0"
   }
 }
